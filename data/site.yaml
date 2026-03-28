@@ -1,0 +1,28 @@
+# Potsdam Aquatics — store info (phone, links, address, wish list form)
+# Lines starting with # are comments — they are ignored.
+
+metaDescription: >-
+  Potsdam Aquatics — tropical fish, aquarium supplies, and expert advice in Potsdam, New York.
+
+facebookUrl: https://www.facebook.com/potsdamaquatics/
+facebookLabel: facebook.com/potsdamaquatics
+
+# What customers see vs what phones dial (no spaces in phoneTel)
+phoneDisplay: "(315) 221-9922"
+phoneTel: "+13152219922"
+
+email: hello@potsdamaquatics.example
+
+visitLead: >-
+  We are in Potsdam, NY. Stop in to see what is swimming — or send us a wish list and we will get back to you.
+
+addressLines:
+  - 123 Market Street
+  - Potsdam, NY 13676
+
+mapsUrl: https://share.google/xI1qfeBYZBG9hlzVS
+
+# Wish list: paste your Formspree URL here (see docs/EDITING.md). Leave empty until set up.
+wishlistFormAction: ""
+wishlistSubject: Wish list — Potsdam Aquatics
+wishlistNextUrl: ""

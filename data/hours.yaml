@@ -1,0 +1,39 @@
+# Store hours — used for “Today’s hours” and the weekly list.
+# Weekday numbers: 0 = Sunday, 1 = Monday, … 6 = Saturday (same as JavaScript).
+
+timezoneNote: >-
+  Hours shown in Eastern Time. Today reflects your usual schedule unless a date override matches.
+
+byWeekday:
+  "0":
+    label: Sunday
+    hours: 11am–4pm
+  "1":
+    label: Monday
+    hours: Closed
+  "2":
+    label: Tuesday
+    hours: 10am–6pm
+  "3":
+    label: Wednesday
+    hours: 10am–6pm
+  "4":
+    label: Thursday
+    hours: 10am–6pm
+  "5":
+    label: Friday
+    hours: 10am–7pm
+  "6":
+    label: Saturday
+    hours: 10am–6pm
+
+# One-off days: use the calendar date as YYYY-MM-DD.
+# Examples (remove the # at the start of a line to use):
+# dateOverrides:
+#   "2026-12-25":
+#     closed: true
+#     note: Closed for Christmas
+#   "2026-07-04":
+#     hours: 10am–2pm
+#     note: Short hours — holiday
+dateOverrides: {}

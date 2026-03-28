@@ -19,6 +19,24 @@
     }
   }
 
+  function loadYaml(url) {
+    return fetch(url).then(function (r) {
+      if (!r.ok) throw new Error("bad response");
+      return r.text();
+    }).then(function (text) {
+      if (typeof jsyaml === "undefined" || !jsyaml.load) {
+        throw new Error("jsyaml missing");
+      }
+      return jsyaml.load(text);
+    });
+  }
+
+  function normalizeHours(h) {
+    if (!h) return h;
+    if (h.dateOverrides == null) h.dateOverrides = {};
+    return h;
+  }
+
   function setFacebookLinks(url) {
     document.querySelectorAll('a[data-link="facebook"]').forEach(function (a) {
       a.href = url;
@@ -28,13 +46,13 @@
   function applySite(site) {
     if (site.metaDescription) {
       var meta = document.querySelector('meta[name="description"]');
-      if (meta) meta.setAttribute("content", site.metaDescription);
+      if (meta) meta.setAttribute("content", String(site.metaDescription).trim());
     }
 
     setFacebookLinks(site.facebookUrl || "https://www.facebook.com/potsdamaquatics/");
 
     var visitLead = document.getElementById("visit-lead");
-    if (visitLead && site.visitLead) visitLead.textContent = site.visitLead;
+    if (visitLead && site.visitLead) visitLead.textContent = String(site.visitLead).trim();
 
     var addr = document.getElementById("visit-address-body");
     if (addr && site.addressLines && site.addressLines.length) {
@@ -42,26 +60,26 @@
     }
 
     var mapLink = document.querySelector('a[data-link="maps"]');
-    if (mapLink && site.mapsUrl) mapLink.href = site.mapsUrl;
+    if (mapLink && site.mapsUrl) mapLink.href = String(site.mapsUrl).trim();
 
     var phoneA = document.querySelector('a[data-link="phone"]');
     if (phoneA) {
-      if (site.phoneTel) phoneA.href = "tel:" + site.phoneTel.replace(/\s/g, "");
-      if (site.phoneDisplay) phoneA.textContent = site.phoneDisplay;
+      if (site.phoneTel) phoneA.href = "tel:" + String(site.phoneTel).replace(/\s/g, "");
+      if (site.phoneDisplay) phoneA.textContent = String(site.phoneDisplay).trim();
     }
 
     var emailA = document.querySelector('a[data-link="email"]');
     if (emailA && site.email) {
-      emailA.href = "mailto:" + site.email;
-      emailA.textContent = site.email;
+      emailA.href = "mailto:" + String(site.email).trim();
+      emailA.textContent = String(site.email).trim();
     }
 
     var fbText = document.querySelector('[data-link="facebook-text"]');
-    if (fbText && site.facebookLabel) fbText.textContent = site.facebookLabel;
+    if (fbText && site.facebookLabel) fbText.textContent = String(site.facebookLabel).trim();
 
     var form = document.getElementById("wishlist-form");
     var formNote = document.getElementById("wishlist-config-note");
-    var action = (site.wishlistFormAction || "").trim();
+    var action = site.wishlistFormAction != null ? String(site.wishlistFormAction).trim() : "";
     if (form) {
       var submitBtn = form.querySelector(".wishlist-submit");
       if (action) {
@@ -71,16 +89,17 @@
         if (submitBtn) submitBtn.disabled = false;
         if (formNote) formNote.hidden = true;
         var subj = form.querySelector('input[name="_subject"]');
-        if (subj && site.wishlistSubject) subj.value = site.wishlistSubject;
+        if (subj && site.wishlistSubject) subj.value = String(site.wishlistSubject).trim();
         var next = form.querySelector('input[name="_next"]');
-        if (site.wishlistNextUrl) {
+        var nextUrl = site.wishlistNextUrl != null ? String(site.wishlistNextUrl).trim() : "";
+        if (nextUrl) {
           if (!next) {
             next = document.createElement("input");
             next.type = "hidden";
             next.name = "_next";
             form.appendChild(next);
           }
-          next.value = site.wishlistNextUrl;
+          next.value = nextUrl;
         } else if (next) {
           next.parentNode.removeChild(next);
         }
@@ -117,26 +136,28 @@
     var ul = document.getElementById("about-bullets");
     var quote = document.getElementById("about-quote");
     var cite = document.getElementById("about-cite");
-    if (title && about.title) title.textContent = about.title;
-    if (intro && about.intro) intro.textContent = about.intro;
+    if (title && about.title) title.textContent = String(about.title).trim();
+    if (intro && about.intro) intro.textContent = String(about.intro).trim();
     if (ul && about.bullets && about.bullets.length) {
       ul.innerHTML = "";
       about.bullets.forEach(function (b) {
         var li = document.createElement("li");
-        li.textContent = b;
+        li.textContent = String(b).trim();
         ul.appendChild(li);
       });
     }
-    if (quote && about.quote) quote.textContent = "\u201c" + about.quote + "\u201d";
-    if (cite && about.quoteAttribution) cite.textContent = "\u2014 " + about.quoteAttribution;
+    if (quote && about.quote) quote.textContent = "\u201c" + String(about.quote).trim() + "\u201d";
+    if (cite && about.quoteAttribution) {
+      cite.textContent = "\u2014 " + String(about.quoteAttribution).trim();
+    }
   }
 
   function applyGallery(g) {
     var h2 = document.getElementById("gallery-title");
     var p = document.getElementById("gallery-intro");
     var grid = document.getElementById("gallery-grid");
-    if (h2 && g.title) h2.textContent = g.title;
-    if (p && g.intro) p.textContent = g.intro;
+    if (h2 && g.title) h2.textContent = String(g.title).trim();
+    if (p && g.intro) p.textContent = String(g.intro).trim();
     if (!grid || !g.items || !g.items.length) return;
     grid.innerHTML = "";
     g.items.forEach(function (item) {
@@ -149,7 +170,7 @@
       img.height = 600;
       img.loading = "lazy";
       var cap = document.createElement("figcaption");
-      cap.textContent = item.caption || "";
+      cap.textContent = item.caption ? String(item.caption).trim() : "";
       fig.appendChild(img);
       fig.appendChild(cap);
       grid.appendChild(fig);
@@ -160,31 +181,33 @@
     var now = new Date();
     var iso = localISODate(now);
     var wd = String(now.getDay());
-    var weekly = (hoursData.byWeekday && hoursData.byWeekday[wd]) || {
+    var by = hoursData.byWeekday || {};
+    var weekly = by[wd] || by[Number(wd)] || {
       label: "Today",
       hours: "See store",
     };
-    var override = hoursData.dateOverrides && hoursData.dateOverrides[iso];
+    var overrides = hoursData.dateOverrides || {};
+    var override = overrides[iso];
     var statusText;
     var note = "";
     if (override) {
       if (override.closed === true) {
         statusText = "Closed";
       } else if (override.hours) {
-        statusText = override.hours;
+        statusText = String(override.hours).trim();
       } else {
         statusText = weekly.hours;
       }
-      note = override.note || "";
+      note = override.note ? String(override.note).trim() : "";
     } else {
-      statusText = weekly.hours;
+      statusText = weekly.hours || "\u2014";
     }
     return {
       heading: formatTodayHeading(now),
       weekdayLabel: weekly.label,
       statusText: statusText,
       note: note,
-      timezoneNote: hoursData.timezoneNote || "",
+      timezoneNote: hoursData.timezoneNote ? String(hoursData.timezoneNote).trim() : "",
     };
   }
 
@@ -219,7 +242,7 @@
     weekEl.innerHTML = "";
     for (var i = 0; i < 7; i++) {
       var key = String(i);
-      var row = hoursData.byWeekday[key];
+      var row = hoursData.byWeekday[key] || hoursData.byWeekday[i];
       if (!row) continue;
       var dt = document.createElement("div");
       dt.className = "hours-week__day";
@@ -238,22 +261,14 @@
   }
 
   Promise.all([
-    fetch("data/site.json").then(function (r) {
-      return r.json();
-    }),
-    fetch("data/hours.json").then(function (r) {
-      return r.json();
-    }),
-    fetch("data/about.json").then(function (r) {
-      return r.json();
-    }),
-    fetch("data/gallery.json").then(function (r) {
-      return r.json();
-    }),
+    loadYaml("data/site.yaml"),
+    loadYaml("data/hours.yaml"),
+    loadYaml("data/about.yaml"),
+    loadYaml("data/gallery.yaml"),
   ])
     .then(function (results) {
       applySite(results[0]);
-      applyHours(results[1]);
+      applyHours(normalizeHours(results[1]));
       applyAbout(results[2]);
       applyGallery(results[3]);
     })

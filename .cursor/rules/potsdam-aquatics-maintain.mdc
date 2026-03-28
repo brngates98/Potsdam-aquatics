@@ -1,0 +1,19 @@
+---
+description: Potsdam Aquatics site — keep docs in sync when changing data or code
+globs:
+  - data/**/*
+  - js/content.js
+  - js/main.js
+  - index.html
+  - css/styles.css
+  - docs/**/*.md
+  - AGENTS.md
+  - README.md
+alwaysApply: false
+---
+
+# Potsdam Aquatics maintenance
+
+- Site content lives in **`data/*.yaml`** (not JSON). **`js/content.js`** loads it; **`js/vendor/js-yaml.min.js`** is required.
+- When you change data shape, file names, loader logic, or user-visible behavior, update **`docs/EDITING.md`** and **`docs/AI-CONTEXT.md`**, and adjust **`AGENTS.md`** if agent workflow changes.
+- Follow instructions in **`AGENTS.md`** for the full “update docs” expectation.

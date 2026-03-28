@@ -28,7 +28,7 @@
     <a class="skip-link" href="#main">Skip to content</a>
 
     <p id="content-load-error" class="load-error" hidden>
-      Could not load site content. Check that <code>data/*.json</code> files are present (try refreshing).
+      Could not load site content. Check that <code>data/*.yaml</code> files exist and <code>js/vendor/js-yaml.min.js</code> is present (try refreshing).
     </p>
 
     <header class="site-header">
@@ -223,8 +223,8 @@
           </div>
 
           <p id="wishlist-config-note" class="wishlist-config-note" hidden>
-            Wish list email is not set up yet. The store owner should add a Formspree link in
-            <code>data/site.json</code> (see <code>data/EDIT-ME.txt</code>).
+            Wish list email is not set up yet. Add a Formspree URL in
+            <code>data/site.yaml</code> (see <code>docs/EDITING.md</code>).
           </p>
 
           <form
@@ -325,6 +325,7 @@
       </div>
     </footer>
 
+    <script src="js/vendor/js-yaml.min.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/content.js" defer></script>
   </body>
