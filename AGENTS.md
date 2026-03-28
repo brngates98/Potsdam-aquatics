@@ -14,7 +14,7 @@ Do not leave documentation stale after substantive changes.
 ## Data format
 
 - Content lives in **`data/site.yaml`**, **`data/hours.yaml`**, **`data/about.yaml`**, **`data/gallery.yaml`** (YAML with `#` comments).
-- The browser parses YAML using **`js/vendor/js-yaml.min.js`** (vendored; do not remove).
+- The browser parses YAML using **`js/lib/js-yaml.min.js`** (vendored; do not remove). It loads **without** `defer` so `window.jsyaml` exists before `content.js` runs.
 - **Do not reintroduce JSON** as the primary format unless you migrate docs and `content.js` together.
 
 ## Longer reference

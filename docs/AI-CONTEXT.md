@@ -6,7 +6,9 @@ Use this file when helping maintain the site. Human-friendly steps live in **`do
 
 - **Static site** — no server. Hosted on **GitHub Pages** from repo root (`index.html`).
 - **Content** — four YAML files under **`data/`**, loaded at runtime by **`js/content.js`** via `fetch()`.
-- **YAML parsing** — **`js/vendor/js-yaml.min.js`** (js-yaml 4.x) must load **before** `content.js` (see `index.html`). Global: **`jsyaml.load`**.
+- **YAML parsing** — **`js/lib/js-yaml.min.js`** (js-yaml 4.x). Loaded as a **blocking** `<script>` (no `defer`) before `main.js` / `content.js` so `window.jsyaml` is defined. Global: **`jsyaml.load`**.
+- **Fetch paths** — `content.js` builds URLs with `rootPath()` + `data/*.yaml` so requests work on GitHub project Pages (`/Repo-name/`).
+- **`.nojekyll`** — present at repo root so GitHub Pages does not run Jekyll on this static site.
 
 ## Data files (authoritative)
 
@@ -39,4 +41,4 @@ When you change **schemas**, **file names**, **loader behavior**, or **anything 
 
 ---
 
-Last updated: 2026-03-28 (YAML data + vendored js-yaml + docs).
+Last updated: 2026-03-28 (js-yaml in `js/lib/`, sync script load, `.nojekyll`, `rootPath()` fetches).

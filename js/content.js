@@ -1,4 +1,11 @@
 (function () {
+  /** Origin-relative path to site root (fixes project Pages paths like /Repo-name/). */
+  function rootPath() {
+    var p = window.location.pathname.replace(/\/index\.html?$/i, "");
+    if (!p.endsWith("/")) p += "/";
+    return p;
+  }
+
   function localISODate(d) {
     var y = d.getFullYear();
     var m = String(d.getMonth() + 1).padStart(2, "0");
@@ -19,15 +26,17 @@
     }
   }
 
-  function loadYaml(url) {
+  function loadYaml(relPath) {
+    var url = rootPath() + relPath.replace(/^\//, "");
     return fetch(url).then(function (r) {
-      if (!r.ok) throw new Error("bad response");
+      if (!r.ok) throw new Error("HTTP " + r.status + " " + url);
       return r.text();
     }).then(function (text) {
-      if (typeof jsyaml === "undefined" || !jsyaml.load) {
-        throw new Error("jsyaml missing");
+      var parser = window.jsyaml;
+      if (typeof parser === "undefined" || !parser.load) {
+        throw new Error("jsyaml missing (script blocked or failed to load)");
       }
-      return jsyaml.load(text);
+      return parser.load(text);
     });
   }
 
@@ -272,7 +281,10 @@
       applyAbout(results[2]);
       applyGallery(results[3]);
     })
-    .catch(function () {
+    .catch(function (err) {
+      if (typeof console !== "undefined" && console.error) {
+        console.error("Potsdam Aquatics content load failed:", err);
+      }
       showLoadError();
     });
 })();

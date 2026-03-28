@@ -23,4 +23,4 @@ Then open the URL it prints (do not rely on `file://` — `fetch` needs a local 
 
 ## Tech
 
-HTML, CSS, vanilla JS; content in **`data/*.yaml`**; YAML parsed in-browser with **`js/vendor/js-yaml.min.js`**.
+HTML, CSS, vanilla JS; content in **`data/*.yaml`**; YAML parsed in-browser with **`js/lib/js-yaml.min.js`**.

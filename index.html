@@ -28,7 +28,7 @@
     <a class="skip-link" href="#main">Skip to content</a>
 
     <p id="content-load-error" class="load-error" hidden>
-      Could not load site content. Check that <code>data/*.yaml</code> files exist and <code>js/vendor/js-yaml.min.js</code> is present (try refreshing).
+      Could not load site content. Check that <code>data/*.yaml</code> exists and <code>js/lib/js-yaml.min.js</code> loads (try another browser or disable blockers, then refresh).
     </p>
 
     <header class="site-header">
@@ -325,7 +325,8 @@
       </div>
     </footer>
 
-    <script src="js/vendor/js-yaml.min.js" defer></script>
+    <!-- Load YAML parser before deferred scripts so window.jsyaml exists when content.js runs -->
+    <script src="js/lib/js-yaml.min.js"></script>
     <script src="js/main.js" defer></script>
     <script src="js/content.js" defer></script>
   </body>
