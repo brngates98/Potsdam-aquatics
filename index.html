@@ -27,6 +27,10 @@
     </div>
     <a class="skip-link" href="#main">Skip to content</a>
 
+    <p id="content-load-error" class="load-error" hidden>
+      Could not load site content. Check that <code>data/*.json</code> files are present (try refreshing).
+    </p>
+
     <header class="site-header">
       <div class="header-inner">
         <a class="logo" href="#top" aria-label="Potsdam Aquatics home">
@@ -37,10 +41,12 @@
           <a href="#about">About</a>
           <a href="#gallery">Fish &amp; Tanks</a>
           <a href="#visit">Visit</a>
+          <a href="#wishlist">Wish list</a>
           <a href="#contact">Contact</a>
           <a
             class="nav-cta"
-            href="https://www.facebook.com/"
+            data-link="facebook"
+            href="https://www.facebook.com/potsdamaquatics/"
             target="_blank"
             rel="noopener noreferrer"
             >Facebook</a
@@ -60,9 +66,11 @@
         <a href="#about">About</a>
         <a href="#gallery">Fish &amp; Tanks</a>
         <a href="#visit">Visit</a>
+        <a href="#wishlist">Wish list</a>
         <a href="#contact">Contact</a>
         <a
-          href="https://www.facebook.com/"
+          data-link="facebook"
+          href="https://www.facebook.com/potsdamaquatics/"
           target="_blank"
           rel="noopener noreferrer"
           >Facebook</a
@@ -85,7 +93,8 @@
             <a class="btn btn-primary" href="#visit">Plan your visit</a>
             <a
               class="btn btn-ghost"
-              href="https://www.facebook.com/"
+              data-link="facebook"
+              href="https://www.facebook.com/potsdamaquatics/"
               target="_blank"
               rel="noopener noreferrer"
               >Follow us on Facebook</a
@@ -113,23 +122,13 @@
         <div class="section-inner">
           <div class="about-grid">
             <div class="about-copy">
-              <h2>Why swimmers choose us</h2>
-              <p>
-                We focus on water quality, ethical sourcing, and helping you build a
-                tank you will enjoy for years — not just impulse buys at the counter.
-              </p>
-              <ul class="about-list">
-                <li>Quarantined and conditioned livestock when possible</li>
-                <li>Plants, hardscape, and foods for natural-style aquascapes</li>
-                <li>Practical advice for beginners and experienced keepers</li>
-              </ul>
+              <h2 id="about-title">Why swimmers choose us</h2>
+              <p id="about-intro"></p>
+              <ul class="about-list" id="about-bullets"></ul>
             </div>
             <div class="about-panel">
-              <blockquote>
-                “We would rather talk you out of the wrong fish than sell you one that
-                will not thrive.”
-              </blockquote>
-              <cite>— Potsdam Aquatics team</cite>
+              <blockquote id="about-quote"></blockquote>
+              <cite id="about-cite"></cite>
             </div>
           </div>
         </div>
@@ -147,74 +146,10 @@
       <section id="gallery" class="section gallery">
         <div class="section-inner">
           <header class="section-head">
-            <h2>In the tanks this week</h2>
-            <p>
-              A peek at the kind of life we love to keep. Inventory changes often —
-              stop by or message us for what is available right now.
-            </p>
+            <h2 id="gallery-title">In the tanks this week</h2>
+            <p id="gallery-intro"></p>
           </header>
-          <div class="gallery-grid">
-            <figure class="gallery-item">
-              <img
-                src="https://images.unsplash.com/photo-1520639888713-7851133b1927?auto=format&fit=crop&w=900&q=80"
-                alt="Colorful tropical fish swimming in an aquarium"
-                width="900"
-                height="600"
-                loading="lazy"
-              />
-              <figcaption>Community tropicals</figcaption>
-            </figure>
-            <figure class="gallery-item">
-              <img
-                src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80"
-                alt="Aquarium with plants and schooling fish"
-                width="900"
-                height="600"
-                loading="lazy"
-              />
-              <figcaption>Planted display tanks</figcaption>
-            </figure>
-            <figure class="gallery-item">
-              <img
-                src="https://images.unsplash.com/photo-1551524164-687a55dd1126?auto=format&fit=crop&w=900&q=80"
-                alt="Close-up of a betta fish with flowing fins"
-                width="900"
-                height="600"
-                loading="lazy"
-              />
-              <figcaption>Bettas &amp; centerpiece fish</figcaption>
-            </figure>
-            <figure class="gallery-item">
-              <img
-                src="https://images.unsplash.com/photo-1583212292454-1fe62296026b?auto=format&fit=crop&w=900&q=80"
-                alt="Marine reef aquarium with corals"
-                width="900"
-                height="600"
-                loading="lazy"
-              />
-              <figcaption>Saltwater &amp; reef-ready livestock</figcaption>
-            </figure>
-            <figure class="gallery-item">
-              <img
-                src="https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=900&q=80"
-                alt="Goldfish in a well-lit aquarium"
-                width="900"
-                height="600"
-                loading="lazy"
-              />
-              <figcaption>Goldfish &amp; coldwater</figcaption>
-            </figure>
-            <figure class="gallery-item">
-              <img
-                src="https://images.unsplash.com/photo-1535591273668-578e31182c4f?auto=format&fit=crop&w=900&q=80"
-                alt="Aquarium aquascape with rocks and green plants"
-                width="900"
-                height="600"
-                loading="lazy"
-              />
-              <figcaption>Aquascaping &amp; live plants</figcaption>
-            </figure>
-          </div>
+          <div class="gallery-grid" id="gallery-grid"></div>
         </div>
       </section>
 
@@ -228,33 +163,104 @@
       </div>
 
       <section id="visit" class="section visit">
-        <div class="section-inner visit-split">
-          <div>
-            <h2>Visit the shop</h2>
-            <p class="visit-lead">
-              We are in <strong>Potsdam, NY</strong>. Replace the placeholder address
-              below with your street and hours in <code>index.html</code>.
-            </p>
-            <address class="visit-address">
-              <span class="visit-label">Address</span>
-              123 Market Street<br />
-              Potsdam, NY 13676
-            </address>
-            <p class="visit-hours">
-              <span class="visit-label">Hours</span>
-              Tue–Sat 10am–6pm · Sun 11am–4pm · Mon closed
-            </p>
+        <div class="section-inner">
+          <h2>Visit the shop</h2>
+          <p class="visit-lead" id="visit-lead"></p>
+
+          <div class="today-hours" aria-live="polite">
+            <div class="today-hours__inner">
+              <span class="today-hours__label">Today&rsquo;s hours</span>
+              <p class="today-hours__date" id="today-hours-date"></p>
+              <p class="today-hours__status" id="today-hours-status"></p>
+              <p class="today-hours__note" id="today-hours-note" hidden></p>
+              <p class="today-hours__tz" id="today-hours-tz" hidden></p>
+            </div>
           </div>
-          <div class="visit-map">
-            <a
-              class="map-link"
-              href="https://www.google.com/maps/search/Potsdam+NY+aquarium+fish+store"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Open in Google Maps
-            </a>
+
+          <div class="visit-split">
+            <div>
+              <address class="visit-address">
+                <span class="visit-label">Address</span>
+                <span id="visit-address-body"></span>
+              </address>
+              <div class="hours-week">
+                <span class="visit-label">Regular week</span>
+                <div class="hours-week__grid" id="week-hours-body"></div>
+              </div>
+            </div>
+            <div class="visit-map">
+              <a
+                class="map-link"
+                data-link="maps"
+                href="https://www.google.com/maps/search/Potsdam+Aquatics+Potsdam+NY"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Open in Google Maps
+              </a>
+            </div>
           </div>
+        </div>
+      </section>
+
+      <section id="wishlist" class="section wishlist">
+        <div class="section-inner wishlist-inner">
+          <header class="section-head">
+            <h2>Send a wish list</h2>
+            <p>
+              Tell us what you are looking for — species, tank size, plants, dry goods —
+              and we will follow up when we can help.
+            </p>
+          </header>
+
+          <div
+            id="wishlist-thanks"
+            class="wishlist-thanks"
+            role="status"
+            hidden
+          >
+            Thanks — your wish list was sent. We will be in touch soon.
+          </div>
+
+          <p id="wishlist-config-note" class="wishlist-config-note" hidden>
+            Wish list email is not set up yet. The store owner should add a Formspree link in
+            <code>data/site.json</code> (see <code>data/EDIT-ME.txt</code>).
+          </p>
+
+          <form
+            id="wishlist-form"
+            class="wishlist-form"
+            method="POST"
+            action="#"
+          >
+            <input type="hidden" name="_subject" value="Wish list — Potsdam Aquatics" />
+            <input type="hidden" name="_next" value="" />
+
+            <div class="form-row">
+              <label class="form-field">
+                <span class="form-label">Name</span>
+                <input type="text" name="name" required autocomplete="name" />
+              </label>
+              <label class="form-field">
+                <span class="form-label">Email</span>
+                <input type="email" name="email" required autocomplete="email" />
+              </label>
+            </div>
+            <label class="form-field">
+              <span class="form-label">Phone <span class="form-optional">(optional)</span></span>
+              <input type="tel" name="phone" autocomplete="tel" />
+            </label>
+            <label class="form-field">
+              <span class="form-label">Your wish list</span>
+              <textarea
+                name="wishlist"
+                rows="6"
+                required
+                placeholder="Example: 20 gal planted community, 6 rummynose tetras, driftwood, easy low-light plants…"
+              ></textarea>
+            </label>
+            <button type="submit" class="btn btn-primary wishlist-submit">Send wish list</button>
+          </form>
         </div>
       </section>
 
@@ -269,19 +275,22 @@
             <ul class="contact-list">
               <li>
                 <span class="contact-label">Phone</span>
-                <a href="tel:+13155550123">(315) 555-0123</a>
+                <a data-link="phone" href="tel:+13155550123">(315) 555-0123</a>
               </li>
               <li>
                 <span class="contact-label">Email</span>
-                <a href="mailto:hello@potsdamaquatics.example">hello@potsdamaquatics.example</a>
+                <a data-link="email" href="mailto:hello@potsdamaquatics.example"
+                  >hello@potsdamaquatics.example</a
+                >
               </li>
               <li>
                 <span class="contact-label">Facebook</span>
                 <a
-                  href="https://www.facebook.com/"
+                  data-link="facebook"
+                  href="https://www.facebook.com/potsdamaquatics/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  >facebook.com/your-page</a
+                  ><span data-link="facebook-text">facebook.com/potsdamaquatics</span></a
                 >
               </li>
             </ul>
@@ -291,7 +300,8 @@
             <p>New arrivals and sales often post on Facebook first.</p>
             <a
               class="btn btn-primary btn-block"
-              href="https://www.facebook.com/"
+              data-link="facebook"
+              href="https://www.facebook.com/potsdamaquatics/"
               target="_blank"
               rel="noopener noreferrer"
               >Connect on Facebook</a
@@ -306,7 +316,8 @@
         <span class="footer-brand">Potsdam Aquatics</span>
         <span class="footer-meta">Potsdam, New York</span>
         <a
-          href="https://www.facebook.com/"
+          data-link="facebook"
+          href="https://www.facebook.com/potsdamaquatics/"
           target="_blank"
           rel="noopener noreferrer"
           >Facebook</a
@@ -315,5 +326,6 @@
     </footer>
 
     <script src="js/main.js" defer></script>
+    <script src="js/content.js" defer></script>
   </body>
 </html>

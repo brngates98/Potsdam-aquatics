@@ -1,0 +1,14 @@
+{
+  "metaDescription": "Potsdam Aquatics — tropical fish, aquarium supplies, and expert advice in Potsdam, New York.",
+  "facebookUrl": "https://www.facebook.com/potsdamaquatics/",
+  "facebookLabel": "facebook.com/potsdamaquatics",
+  "phoneDisplay": "(315) 555-0123",
+  "phoneTel": "+13155550123",
+  "email": "hello@potsdamaquatics.example",
+  "visitLead": "We are in Potsdam, NY. Stop in to see what is swimming — or send us a wish list and we will get back to you.",
+  "addressLines": ["123 Market Street", "Potsdam, NY 13676"],
+  "mapsUrl": "https://www.google.com/maps/search/Potsdam+Aquatics+Potsdam+NY",
+  "wishlistFormAction": "",
+  "wishlistSubject": "Wish list — Potsdam Aquatics",
+  "wishlistNextUrl": ""
+}

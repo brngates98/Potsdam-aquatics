@@ -1,0 +1,46 @@
+HOW TO UPDATE THE WEBSITE (Potsdam Aquatics)
+============================================
+
+All easy-to-edit text lives in the /data folder as JSON files. After you edit,
+save the file and push to GitHub (or use the GitHub website “Edit” button on
+each file). The live site updates in about a minute.
+
+FILES
+-----
+  site.json     Phone, email, Facebook link, address, map link, wish list form.
+  hours.json    Regular weekly hours + special hours for specific dates.
+  about.json    About section title, paragraph, bullet list, quote.
+  gallery.json  Section title, intro, and photo list (swap in your own images).
+
+FACEBOOK
+--------
+  In site.json, set "facebookUrl" to your page. The whole site uses that link.
+
+TODAY’S HOURS
+-------------
+  1) Normal week: edit "byWeekday" in hours.json. Keys 0–6 are Sunday–Saturday.
+  2) One-off days: add a line under "dateOverrides" with the date as
+     YYYY-MM-DD (example: 2026-12-25). Use "hours" and optional "note", or
+     set "closed": true for a closed day.
+
+WISH LIST FORM
+--------------
+  This site is static; the form emails you through a free service called Formspree.
+
+  1) Create an account at https://formspree.io and make a new form.
+  2) Copy your form endpoint (looks like https://formspree.io/f/abcdefgh).
+  3) Paste it into site.json as "wishlistFormAction".
+  4) Optional: set "wishlistNextUrl" to your site URL plus ?thanks=1 so visitors
+     return here after sending (example below).
+
+  Example wishlistNextUrl:
+  https://YOURUSERNAME.github.io/Potsdam-aquatics/?thanks=1
+
+GALLERY PHOTOS
+--------------
+  Put image files in an /images folder in the repo, then in gallery.json set
+  "src" to "images/your-photo.jpg". Or keep using full URLs from a photo host.
+
+QUESTIONS
+---------
+  Whoever helps with the site can search the project for "data/" to see what loads.
